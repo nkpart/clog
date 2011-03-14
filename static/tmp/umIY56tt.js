@@ -1,0 +1,1 @@
+window.onload=function(){document.getElementById("ff").innerHTML="<i>Added from JavaScript.</i>"}

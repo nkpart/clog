@@ -1,0 +1,10 @@
+<h1>#{title}
+<h2 ##{h2id}>Hi
+<p
+    You are logged in as #{u}. #
+    <a href=@{RootR}>Logout
+    .
+<p
+    You are not logged in. #
+    <a href=@{RootR}>Login now
+    .
