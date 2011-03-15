@@ -1,0 +1,10 @@
+<a href=@{NewPostR}
+  <img src="/static/pencil-48.png" />
+
+<div #new_post
+  <form action=@{NewPostR} method=POST
+    <div
+      <textarea name=post_text cols=60 rows=10
+    <div
+      <input type=submit name=submit value=Write
+

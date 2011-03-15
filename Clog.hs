@@ -9,6 +9,7 @@ module Clog
     , module Settings
     , module Model
     , StaticRoute (..)
+    , addGoogleWebFont
     ) where
 
 import Yesod
@@ -43,7 +44,11 @@ mkYesodData "Clog" [parseRoutes|
 /robots.txt RobotsR GET
 
 / RootR GET
+/posts/new NewPostR GET POST
 |]
+
+addGoogleWebFont :: String -> GWidget sub master ()
+addGoogleWebFont = addStylesheetRemote . ("http://fonts.googleapis.com/css?family="++)
 
 -- Please see the documentation for the Yesod typeclass. There are a number
 -- of settings which can be configured by overriding methods here.
@@ -53,6 +58,7 @@ instance Yesod Clog where
     defaultLayout widget = do
         mmsg <- getMessage
         pc <- widgetToPageContent $ do
+            mapM_ addGoogleWebFont ["Bevan", "Inconsolata"]
             widget
             addCassius $(Settings.cassiusFile "default-layout")
         hamletToRepHtml $(Settings.hamletFile "default-layout")

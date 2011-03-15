@@ -4,6 +4,9 @@
         <title>#{pageTitle pc}
         ^{pageHead pc}
     <body
+        <a href=@{RootR} style="text-decoration: none;"
+          <h1 style="color: black" 
+            Clog
         $maybe msg <- mmsg
-            <div #message>#{msg}
+          <div #message>#{msg}
         ^{pageBody pc}

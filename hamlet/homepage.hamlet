@@ -1,10 +1,10 @@
-<h1>#{title}
-<h2 ##{h2id}>Hi
-<p
-    You are logged in as #{u}. #
-    <a href=@{RootR}>Logout
-    .
-<p
-    You are not logged in. #
-    <a href=@{RootR}>Login now
-    .
+<a href=@{NewPostR}
+  <img src="/static/pencil-48.png" />
+
+<div #posts
+  $forall post <- posts
+    <h3 .post_time
+      #{formattedPostTime post}
+    <p .post_text 
+      #{postText post}
+

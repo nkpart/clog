@@ -2,21 +2,30 @@
 module Handler.Root where
 
 import Clog
-
+import Model
 import Database.MongoDB
+import Data.Time.Format
+import System.Locale
 
-addGoogleWebFont = addStylesheetRemote . ("http://fonts.googleapis.com/css?family="++)
+formattedPostTime :: Post -> String
+formattedPostTime = formatTime defaultTimeLocale "%A" . postTime
 
 getRootR :: Handler RepHtml
 getRootR = do
-    let u = ("lol"::String)
-    let title =  ("Clog" :: String)
+  posts <- runDB posts
+  defaultLayout $ do
+    setTitle "clog homepage"
+    addWidget $(widgetFile "homepage")
 
-    title <- runDB $ use (Database "clog") $ do
-      return ("Clog" :: String)
+getNewPostR :: Handler RepHtml
+getNewPostR = do
+  defaultLayout $ do
+    setTitle "new clog"
+    addWidget $(widgetFile "posts/new")
 
-    defaultLayout $ do
-        h2id <- lift $ return ("ff" :: String)
-        mapM_ addGoogleWebFont ["Bevan", "Inconsolata"]
-        setTitle "clog homepage"
-        addWidget $(widgetFile "homepage")
+postNewPostR :: Handler RepHtml
+postNewPostR = do
+  Just postText <- lookupPostParam "post_text"
+  runDB $ insertPost postText 
+  redirect RedirectTemporary RootR
+
