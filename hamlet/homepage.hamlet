@@ -2,9 +2,12 @@
   <img src="/static/pencil-48.png" />
 
 <div #posts
-  $forall post <- posts
-    <h3 .post_time
-      #{formattedPostTime post}
-    <p .post_text 
-      #{postText post}
+  $forall pair <- groupedPosts
+    <h3 .post_day
+      #{fst pair}
+    $forall post <- snd pair 
+      <p .post_text 
+        #{postText post}
+      <div .post_stamp
+        #{postStamp post}
 

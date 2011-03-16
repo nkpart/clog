@@ -17,6 +17,7 @@ module Settings
     , approot
     , staticroot
     , staticdir
+    , timeZone
     ) where
 
 import qualified Text.Hamlet as H
@@ -28,6 +29,9 @@ import Data.Monoid (mempty)
 import System.Directory (doesFileExist)
 import Database.MongoDB
 import "mtl" Control.Monad.Reader
+import Data.Time.LocalTime
+
+timeZone = TimeZone (10*60) False "AU"
 
 -- | The base URL for your application. This will usually be different for
 -- development and production. Yesod automatically constructs URLs for you,

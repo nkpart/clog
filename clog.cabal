@@ -37,6 +37,7 @@ executable         clog-test
                  , warp
                  , mongoDB
                  , mtl
+                 , parsedate
     ghc-options:   -Wall -threaded
 
 executable         clog-production

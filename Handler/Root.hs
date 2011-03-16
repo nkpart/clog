@@ -6,13 +6,21 @@ import Model
 import Database.MongoDB
 import Data.Time.Format
 import System.Locale
+import Data.Time.LocalTime
+import System.Time.Parse
 
-formattedPostTime :: Post -> String
-formattedPostTime = formatTime defaultTimeLocale "%A" . postTime
+import qualified Settings
+
+postStamp = showTime "%l:%M %P" . postLocalTime Settings.timeZone 
+
+parseDay = parseCalendarTime defaultTimeLocale "%Y%m%d"
 
 getRootR :: Handler RepHtml
 getRootR = do
-  posts <- runDB posts
+  mdayRaw <- lookupGetParam "day"
+  let mday = mdayRaw >>= parseDay
+  posts <- runDB $ maybe posts postsOn mday
+  let groupedPosts = postDays Settings.timeZone posts
   defaultLayout $ do
     setTitle "clog homepage"
     addWidget $(widgetFile "homepage")
