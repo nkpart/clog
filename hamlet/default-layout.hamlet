@@ -7,6 +7,7 @@
         <a href=@{RootR} style="text-decoration: none;"
           <h1 style="color: black" 
             Clog
+
         $maybe msg <- mmsg
           <div #message>#{msg}
         ^{pageBody pc}

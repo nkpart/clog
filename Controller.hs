@@ -27,10 +27,7 @@ getFaviconR = sendFile "image/x-icon" "favicon.ico"
 getRobotsR :: Handler RepPlain
 getRobotsR = return $ RepPlain $ toContent ("User-agent: *" :: ByteString)
 
--- This function allocates resources (such as a database connection pool),
--- performs initialization and creates a WAI application. This is also the
--- place to put your migrate statements to have automatic database
--- migrations handled by Yesod.
+-- TODO any mongo statements go here
 withClog :: (Application -> IO a) -> IO a
 withClog f = Settings.withMongoPool $ \p -> do
     let h = Clog s p

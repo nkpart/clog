@@ -125,6 +125,7 @@ widgetFile x = do
         e <- qRunIO $ doesFileExist $ tofn x
         if e then f x else [|mempty|]
 
+runMongoDB :: (Service s, MonadIO m) => Action m a -> ConnPool s -> m a
 runMongoDB action pool = do
   Right v <- access safe Master pool action 
   return v

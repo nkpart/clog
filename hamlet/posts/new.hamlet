@@ -1,6 +1,3 @@
-<a href=@{NewPostR}
-  <img src="/static/pencil-48.png" />
-
 <div #new_post
   <form action=@{NewPostR} method=POST
     <div

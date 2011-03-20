@@ -1,5 +1,9 @@
-<a href=@{NewPostR}
-  <img src="/static/pencil-48.png" />
+<div
+  <a href=@{NewPostR}
+    make post 
+<div
+  <a href=@{CalendarR}
+    calendar
 
 <div #posts
   $forall pair <- groupedPosts

@@ -1,4 +1,4 @@
-{-# LANGUAGE QuasiQuotes, TemplateHaskell, TypeFamilies, OverloadedStrings, PackageImports #-}
+{-# LANGUAGE QuasiQuotes, TemplateHaskell, TypeFamilies, OverloadedStrings, PackageImports, RankNTypes, LiberalTypeSynonyms #-}
 module Clog
     ( Clog (..)
     , ClogRoute (..)
@@ -10,6 +10,7 @@ module Clog
     , module Model
     , StaticRoute (..)
     , addGoogleWebFont
+    , runMo
     ) where
 
 import Yesod
@@ -43,8 +44,11 @@ mkYesodData "Clog" [parseRoutes|
 /favicon.ico FaviconR GET
 /robots.txt RobotsR GET
 
-/ RootR GET
-/posts/new NewPostR GET POST
+/                         RootR GET
+/posts/#Integer/#Int/#Int PostsDayR GET
+/posts/#Integer/#Int      PostsMonthR GET
+/posts/new                NewPostR GET POST
+/calendar                 CalendarR GET
 |]
 
 addGoogleWebFont :: String -> GWidget sub master ()
@@ -90,10 +94,12 @@ instance Yesod Clog where
         unless exists $ liftIO $ L.writeFile fn' content'
         return $ Just $ Right (StaticR $ StaticRoute ["tmp", fn] [], [])
 
--- How to run database actions.
+newtype A m a = A { unA :: (ReaderT Database (Action m) a) }
+runMo action = runDB $ A action
+
 instance YesodPersist Clog where
-    type YesodDB Clog = Action
+    type YesodDB Clog = A 
     runDB db = do
       yesod <- getYesod
       let pool = connPool yesod
-      liftIOHandler $ Settings.runMongoDB db pool
+      liftIOHandler $ Settings.runMongoDB (use (Database "clog") (unA db)) pool

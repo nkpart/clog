@@ -1,0 +1,12 @@
+
+<div #calendar
+  $forall cm <- calendarMonths
+    <h3 .month
+      <a href=@{PostsMonthR 2011 3} 
+        #{monthName cm}
+    $forall day <- daysIn cm 
+      <span .day
+        <a href=@{PostsDayR 2011 3 day}
+          #{show day}
+        \ 
+
