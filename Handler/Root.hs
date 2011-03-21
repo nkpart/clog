@@ -9,7 +9,7 @@ import Data.Time
 import System.Locale
 import System.Time.Parse
 import Control.Applicative ((<$>))
-
+import qualified Data.Text as T
 import qualified Settings
 
 postStamp = showTime "%l:%M %P" . postLocalTime Settings.timeZone 
@@ -40,17 +40,33 @@ getPostsMonthR y m = renderPosts =<< runMo (postsBetween $ monthToRange $ fromGr
 getPostsDayR :: Integer -> Int -> Int -> Handler RepHtml
 getPostsDayR y m d = renderPosts =<< runMo (postsBetween $ dayToRange $ fromGregorian y m d)
 
+renderPosts :: [Post] -> Handler RepHtml
 renderPosts posts = do
   let groupedPosts = groupPostsByDays Settings.timeZone posts
   defaultLayout $ do
     setTitle "clog"
     addWidget $(widgetFile "homepage")
 
-getNewPostR :: Handler RepHtml
-getNewPostR = do
+getAdminR :: Handler RepHtml
+getAdminR = do
+  allPosts <- runMo $ postsBy $ sortNatural DESC
   defaultLayout $ do
-    setTitle "new clog"
+    setTitle "new post"
     addWidget $(widgetFile "posts/new")
+
+getDeleteR :: String -> Handler RepHtml
+getDeleteR s = do
+  let oid = unWebId s
+  post <- runMo $ lookupPost oid
+  defaultLayout $ do
+    setTitle "Delete post"
+    addWidget $(widgetFile "posts/delete")
+
+postDeleteR :: String -> Handler RepHtml
+postDeleteR s = do
+  let oid = unWebId s
+  runMo $ deleteObject oid
+  redirect RedirectTemporary AdminR
 
 postNewPostR :: Handler RepHtml
 postNewPostR = do

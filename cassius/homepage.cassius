@@ -1,13 +1,3 @@
-
-p.post_text
+div.post_text *:last-child
   margin-bottom: 0
 
-#posts
-  width: 30em
-
-div.post_stamp
-  font-size: 60%
-  color: lightgrey
-  margin: 0 0
-  text-align: right
-  border-bottom: 1px solid lightgrey

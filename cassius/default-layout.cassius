@@ -7,3 +7,18 @@ h1
   font-family: 'Bevan', arial, serif
   font-size: 240%
 
+#posts
+  width: 30em
+
+div.post_text
+  margin-bottom: 0
+
+div.post_text p
+  margin: 0.5em 0
+
+div.post_stamp
+  font-size: 60%
+  color: lightgrey
+  margin: 0 0
+  text-align: right
+  border-bottom: 1px solid lightgrey

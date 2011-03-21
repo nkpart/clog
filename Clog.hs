@@ -47,8 +47,10 @@ mkYesodData "Clog" [parseRoutes|
 /                         RootR GET
 /posts/#Integer/#Int/#Int PostsDayR GET
 /posts/#Integer/#Int      PostsMonthR GET
-/posts/new                NewPostR GET POST
+/posts/new                NewPostR POST
 /calendar                 CalendarR GET
+/admin                    AdminR GET
+/admin/posts/#String/delete DeleteR GET POST
 |]
 
 addGoogleWebFont :: String -> GWidget sub master ()

@@ -1,6 +1,6 @@
 <div
   <a href=@{NewPostR}
-    make post 
+    make post
 <div
   <a href=@{CalendarR}
     calendar
@@ -10,8 +10,8 @@
     <h3 .post_day
       #{fst pair}
     $forall post <- snd pair 
-      <p .post_text 
-        #{postText post}
+      <div .post_text
+        #{postContent post}
       <div .post_stamp
         #{postStamp post}
 

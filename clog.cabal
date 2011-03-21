@@ -38,6 +38,7 @@ executable         clog-test
                  , mongoDB
                  , mtl
                  , parsedate
+                 , pandoc
     ghc-options:   -Wall -threaded
 
 executable         clog-production

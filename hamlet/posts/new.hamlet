@@ -1,7 +1,31 @@
+<h3
+  New Post
 <div #new_post
   <form action=@{NewPostR} method=POST
     <div
       <textarea name=post_text cols=60 rows=10
     <div
       <input type=submit name=submit value=Write
+
+<h3
+  Existing Posts
+<table
+  <thead
+    <tr
+      <th
+        Snippet
+      <th
+        When
+      <th 
+        Actions
+  <tbody
+  $forall post <- allPosts
+    <tr
+      <td
+        #{T.take 30 $ postText post}
+      <td
+        #{show $ postLocalTime Settings.timeZone post}
+      <td style="text-align: right"
+        <a href=@{DeleteR $ webId $ postId post}> delete
+
 

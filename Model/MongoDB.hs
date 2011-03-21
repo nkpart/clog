@@ -7,6 +7,7 @@ module Model.MongoDB (
   , paginateQuery
   , projectFields
   , sortByField
+  , withSelector
   ) where
 
 import qualified GHC.Word
@@ -39,5 +40,9 @@ sortNatural = sortByField "$natural"
 paginateQuery :: GHC.Word.Word32 -> GHC.Word.Word32 -> Query -> Query
 paginateQuery numPerPage pageNum q = q { Mo.skip = (pageNum - 1) * numPerPage, Mo.limit = numPerPage }
 
+projectFields :: [Label] -> Query -> Query
 projectFields xs qry = qry { project = map (=: (1::Int)) xs }
+
+withSelector :: Selector -> Query -> Query
+withSelector s q = q { Mo.selection = (Mo.selection q) { Mo.selector = s } }
 

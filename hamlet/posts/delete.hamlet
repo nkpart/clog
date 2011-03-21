@@ -1,0 +1,9 @@
+<div #posts
+  <form action=@{DeleteR $ webId $ postId post} method="POST"
+    <h3 Delete Me
+    <div .post_text
+      #{postContent post}
+    <div .post_stamp
+      #{postStamp post}
+    <input type="submit" value="DELETE!"
+    
